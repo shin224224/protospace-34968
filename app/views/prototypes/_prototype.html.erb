@@ -1,0 +1,15 @@
+
+<%#=いらない記述 #form_with model: @prototypes, local: true do |f|%>
+  <div class="card">
+    <%= link_to image_tag(prototype.image, class: :card__img ), prototype_path(prototype.id)%>
+    <%#= image_tag prototype.image("プロトタイプの画像", class: :card__img ), root_path%>
+    <div class="card__body">
+      <%= link_to prototype.title, prototype_path(prototype.id), class: :card__title%>
+      <%#= prototype.title "プロトタイプのタイトル", root_path, class: :card__title%>
+      <p class="card__summary">
+        <%= prototype.catch_copy %>
+      </p>
+      <%#= link_to "by user.name", root_path, class: :card__user %>
+       <%= link_to prototype.user.name, user_path(prototype.user_id), class: :card__user %>
+    </div>
+  </div>
