@@ -1,7 +1,8 @@
 class PrototypesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   #ログインしていない人がやれることがe
-  before_action :move_to_index, except: [:index, :show ]
+  before_action :set_prototype, only: [:edit, :show, :update, :destroy]
+  before_action :move_to_index, except: [:index, :show]
   
   def index
     @prototypes = Prototype.all
@@ -23,17 +24,17 @@ class PrototypesController < ApplicationController
   end
 
   def show
-    @prototype = Prototype.find(params[:id])
+   
     @comment = Comment.new
     @comments = Comment.all
   end
 
   def edit
-    @prototype =Prototype.find(params[:id])
+
   end
 
   def update
-     @prototype = Prototype.find(params[:id])
+    
     if @prototype.update(prototype_params)
       redirect_to prototype_path
     else 
@@ -44,7 +45,7 @@ class PrototypesController < ApplicationController
   end
 
   def destroy
-    @prototype = Prototype.find(params[:id])
+   
     if @prototype.destroy
       redirect_to prototypes_path
     # render :index
@@ -59,9 +60,13 @@ class PrototypesController < ApplicationController
 
   end
 
+  def set_prototype
+    @prototype = Prototype.find(params[:id])
+  end
+
   def move_to_index
-    unless user_signed_in?
+    if @prototype.user !=  current_user
       redirect_to action: :index
     end
-end
+  end 
 end
